@@ -1,7 +1,8 @@
+/* BODY */
 body {
   margin: 0;
-  font-family: Arial;
-  background: linear-gradient(135deg,#0b1f5b,#1e3a8a,#2563eb);
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #0b1f5b, #1e3a8a, #2563eb);
   color: white;
 }
 
@@ -14,6 +15,7 @@ body {
   background: rgba(0,0,0,0.4);
 }
 
+/* LOGO */
 .logo-box {
   display: flex;
   align-items: center;
@@ -24,12 +26,14 @@ body {
   margin-right: 10px;
 }
 
-input {
+/* SEARCH */
+input[type="text"] {
   padding: 8px;
   border-radius: 6px;
   border: none;
 }
 
+/* BUTTONS */
 button {
   padding: 8px 15px;
   border: none;
@@ -37,6 +41,16 @@ button {
   cursor: pointer;
 }
 
+/* LOGIN BUTTON */
+.login-btn {
+  background: green;
+  padding: 10px 15px;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+}
+
+/* REPORT BUTTON */
 .report-btn {
   background: red;
   padding: 10px 15px;
@@ -48,15 +62,23 @@ button {
 /* TITLE */
 h1 {
   text-align: center;
+  margin-top: 20px;
 }
 
-/* CARDS */
+/* SUBTITLE */
+p {
+  text-align: center;
+}
+
+/* CONTAINER */
 .container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  padding: 20px;
 }
 
+/* CARD */
 .card {
   background: white;
   color: black;
@@ -78,12 +100,50 @@ h1 {
 }
 
 /* FORM */
-form input, textarea {
+form {
+  text-align: center;
+}
+
+form input,
+form textarea {
   width: 250px;
   padding: 10px;
   margin: 8px;
   border-radius: 6px;
   border: none;
+}
+
+/* FILE INPUT */
+input[type="file"] {
+  color: white;
+}
+
+/* SUBMIT BUTTON */
+form button {
+  background: #2563eb;
+  color: white;
+}
+
+/* DETAILS PAGE */
+#details {
+  text-align: center;
+  padding: 20px;
+}
+
+#details img {
+  border-radius: 10px;
+  margin: 10px;
+}
+
+/* STATUS COLORS */
+.status-missing {
+  color: red;
+  font-weight: bold;
+}
+
+.status-found {
+  color: green;
+  font-weight: bold;
 }
 
  
