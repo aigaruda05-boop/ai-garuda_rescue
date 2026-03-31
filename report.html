@@ -8,44 +8,39 @@
 
 <body>
 
-<!-- NAVBAR -->
 <div class="navbar">
-
   <div class="logo-box">
     <img src="images/logo.png" class="logo">
     <h2>AI GARUDA</h2>
   </div>
 
-  <a href="index.html">Home</a>
-
+  <a href="index.html" class="login-btn">Home</a>
 </div>
 
-<h2>Report Missing Person</h2>
+<h2 style="text-align:center;">Report Missing Person</h2>
 
-<form onsubmit="submitForm(event)">
+<form onsubmit="submitForm(event)" style="text-align:center;">
 
-<input id="name" placeholder="Name" required><br>
-<input id="age" placeholder="Age"><br>
+<input id="name" placeholder="Name" required>
+<input id="age" placeholder="Age">
 
-<input id="mobile1" placeholder="Family Mobile 1"><br>
-<input id="mobile2" placeholder="Family Mobile 2"><br>
+<input id="mobile1" placeholder="Family Mobile 1">
+<input id="mobile2" placeholder="Family Mobile 2">
 
-<h3>Missing Location</h3>
-<input id="m_state" placeholder="State"><br>
-<input id="m_district" placeholder="District"><br>
-<input id="m_village" placeholder="Village"><br>
+<input id="m_state" placeholder="Missing State">
+<input id="m_district" placeholder="Missing District">
+<input id="m_village" placeholder="Missing Village">
 
-<h3>Address</h3>
-<input id="a_state" placeholder="State"><br>
-<input id="a_district" placeholder="District"><br>
-<input id="a_village" placeholder="Village"><br>
-<input id="colony" placeholder="Colony"><br>
+<input id="a_state" placeholder="Address State">
+<input id="a_district" placeholder="Address District">
+<input id="a_village" placeholder="Address Village">
+<input id="colony" placeholder="Colony">
 
-<input id="date" type="date"><br>
+<input id="date" type="date">
 
-<textarea id="description" placeholder="Description"></textarea><br>
+<textarea id="description" placeholder="Description"></textarea>
 
-<input type="file" id="image"><br><br>
+<input id="image" type="file">
 
 <button type="submit">Submit</button>
 
