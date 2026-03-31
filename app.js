@@ -1,5 +1,5 @@
-const SUPABASE_URL = "YOUR_URL";
-const SUPABASE_KEY = "YOUR_KEY";
+const SUPABASE_URL = "https://zzhpdcrmxiqmughywqhg.supabase.co";
+const SUPABASE_KEY = "sb_publishable_d0BTr8vU0tNDpjNyJ1-SbQ_mcMOgJvK";
 
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
@@ -10,8 +10,13 @@ async function signup() {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
-  await supabase.auth.signUp({ email, password });
-  alert("Account created!");
+  const { error } = await supabase.auth.signUp({ email, password });
+
+  if (!error) {
+    alert("Account created!");
+  } else {
+    alert(error.message);
+  }
 }
 
 // LOGIN
@@ -34,7 +39,7 @@ async function logout() {
   window.location.href = "login.html";
 }
 
-// ================= LOAD =================
+// ================= LOAD ALL =================
 
 async function loadPersons() {
   const { data } = await supabase
@@ -47,6 +52,8 @@ async function loadPersons() {
 
 function displayData(data) {
   const container = document.getElementById("list");
+  if (!container) return;
+
   container.innerHTML = "";
 
   data.forEach(p => {
@@ -56,7 +63,6 @@ function displayData(data) {
         <h3>${p.name}</h3>
         <p>${p.m_district || ''}</p>
         <p>Status: ${p.status}</p>
-
         <button onclick="viewDetails(${p.id})">View</button>
       </div>
     `;
@@ -81,10 +87,11 @@ async function searchPersons() {
 async function submitForm(e) {
   e.preventDefault();
 
-  const { data: user } = await supabase.auth.getUser();
+  const { data: userData } = await supabase.auth.getUser();
 
-  if (!user.user) {
+  if (!userData.user) {
     alert("Please login first");
+    window.location.href = "login.html";
     return;
   }
 
@@ -92,11 +99,13 @@ async function submitForm(e) {
   let imageUrl = "";
 
   if (file) {
-    const { data } = await supabase.storage
+    const { data, error } = await supabase.storage
       .from("images")
       .upload(Date.now() + file.name, file);
 
-    imageUrl = `${SUPABASE_URL}/storage/v1/object/public/images/${data.path}`;
+    if (!error) {
+      imageUrl = `${SUPABASE_URL}/storage/v1/object/public/images/${data.path}`;
+    }
   }
 
   await supabase.from("persons").insert([{
@@ -114,22 +123,77 @@ async function submitForm(e) {
     date: document.getElementById("date").value,
     description: document.getElementById("description").value,
     image: imageUrl,
-    user_id: user.user.id,
+    user_id: userData.user.id,
     status: "missing"
   }]);
 
-  alert("Reported!");
+  alert("Reported Successfully!");
   window.location.href = "index.html";
+}
+
+// ================= MY REPORTS =================
+
+async function loadMyReports() {
+  const { data: userData } = await supabase.auth.getUser();
+
+  if (!userData.user) {
+    window.location.href = "login.html";
+    return;
+  }
+
+  const { data } = await supabase
+    .from("persons")
+    .select("*")
+    .eq("user_id", userData.user.id)
+    .order("id", { ascending: false });
+
+  const container = document.getElementById("list");
+  container.innerHTML = "";
+
+  if (!data || data.length === 0) {
+    container.innerHTML = "<h3>No reports yet</h3>";
+    return;
+  }
+
+  data.forEach(p => {
+    container.innerHTML += `
+      <div class="card">
+        <img src="${p.image || 'https://via.placeholder.com/200'}">
+        <h3>${p.name}</h3>
+        <p>Status: ${p.status}</p>
+
+        <button onclick="markFound(${p.id})">Mark Found</button>
+        <button onclick="deletePerson(${p.id})">Delete</button>
+      </div>
+    `;
+  });
+}
+
+// ================= DELETE =================
+
+async function deletePerson(id) {
+  await supabase.from("persons").delete().eq("id", id);
+  alert("Deleted");
+  location.reload();
+}
+
+// ================= MARK FOUND =================
+
+async function markFound(id) {
+  await supabase.from("persons")
+    .update({ status: "found" })
+    .eq("id", id);
+
+  alert("Marked as found");
+  location.reload();
 }
 
 // ================= DETAILS =================
 
-async function viewDetails(id) {
+function viewDetails(id) {
   localStorage.setItem("personId", id);
   window.location.href = "details.html";
 }
-
-// ================= DETAILS PAGE =================
 
 async function loadDetails() {
   const id = localStorage.getItem("personId");
@@ -145,28 +209,10 @@ async function loadDetails() {
     <img src="${data.image}" width="200">
     <p>${data.description}</p>
     <p>Status: ${data.status}</p>
+
     <button onclick="markFound(${data.id})">Mark Found</button>
     <button onclick="deletePerson(${data.id})">Delete</button>
   `;
-}
-
-// ================= DELETE =================
-
-async function deletePerson(id) {
-  await supabase.from("persons").delete().eq("id", id);
-  alert("Deleted");
-  window.location.href = "index.html";
-}
-
-// ================= MARK FOUND =================
-
-async function markFound(id) {
-  await supabase.from("persons")
-    .update({ status: "found" })
-    .eq("id", id);
-
-  alert("Marked as found");
-  location.reload();
 }
 
  
