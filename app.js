@@ -5,41 +5,38 @@ const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // ================= AUTH =================
 
-// SIGNUP
 async function signup() {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
   const { error } = await supabase.auth.signUp({ email, password });
 
-  if (!error) {
-    alert("Account created!");
-  } else {
+  if (error) {
     alert(error.message);
+  } else {
+    alert("Account created! Now login.");
   }
 }
 
-// LOGIN
 async function login() {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
   const { error } = await supabase.auth.signInWithPassword({ email, password });
 
-  if (!error) {
-    window.location.href = "index.html";
+  if (error) {
+    alert(error.message);
   } else {
-    alert("Login failed");
+    window.location.href = "index.html";
   }
 }
 
-// LOGOUT
 async function logout() {
   await supabase.auth.signOut();
   window.location.href = "login.html";
 }
 
-// ================= LOAD ALL =================
+// ================= LOAD =================
 
 async function loadPersons() {
   const { data } = await supabase
@@ -47,10 +44,6 @@ async function loadPersons() {
     .select("*")
     .order("id", { ascending: false });
 
-  displayData(data);
-}
-
-function displayData(data) {
   const container = document.getElementById("list");
   if (!container) return;
 
@@ -61,9 +54,8 @@ function displayData(data) {
       <div class="card">
         <img src="${p.image || 'https://via.placeholder.com/200'}">
         <h3>${p.name}</h3>
-        <p>${p.m_district || ''}</p>
+        <p>${p.m_district || ""}</p>
         <p>Status: ${p.status}</p>
-        <button onclick="viewDetails(${p.id})">View</button>
       </div>
     `;
   });
@@ -79,10 +71,25 @@ async function searchPersons() {
     .select("*")
     .or(`name.ilike.%${value}%,m_district.ilike.%${value}%`);
 
-  displayData(data);
+  displayCustom(data);
 }
 
-// ================= ADD =================
+function displayCustom(data) {
+  const container = document.getElementById("list");
+  container.innerHTML = "";
+
+  data.forEach(p => {
+    container.innerHTML += `
+      <div class="card">
+        <img src="${p.image || 'https://via.placeholder.com/200'}">
+        <h3>${p.name}</h3>
+        <p>Status: ${p.status}</p>
+      </div>
+    `;
+  });
+}
+
+// ================= REPORT =================
 
 async function submitForm(e) {
   e.preventDefault();
@@ -95,20 +102,24 @@ async function submitForm(e) {
     return;
   }
 
-  const file = document.getElementById("image").files[0];
   let imageUrl = "";
+
+  const file = document.getElementById("image").files[0];
 
   if (file) {
     const { data, error } = await supabase.storage
       .from("images")
       .upload(Date.now() + file.name, file);
 
-    if (!error) {
-      imageUrl = `${SUPABASE_URL}/storage/v1/object/public/images/${data.path}`;
+    if (error) {
+      alert("Image upload failed");
+      return;
     }
+
+    imageUrl = `${SUPABASE_URL}/storage/v1/object/public/images/${data.path}`;
   }
 
-  await supabase.from("persons").insert([{
+  const { error } = await supabase.from("persons").insert([{
     name: document.getElementById("name").value,
     age: document.getElementById("age").value,
     mobile1: document.getElementById("mobile1").value,
@@ -127,8 +138,12 @@ async function submitForm(e) {
     status: "missing"
   }]);
 
-  alert("Reported Successfully!");
-  window.location.href = "index.html";
+  if (error) {
+    alert(error.message);
+  } else {
+    alert("Reported Successfully!");
+    window.location.href = "index.html";
+  }
 }
 
 // ================= MY REPORTS =================
@@ -186,33 +201,6 @@ async function markFound(id) {
 
   alert("Marked as found");
   location.reload();
-}
-
-// ================= DETAILS =================
-
-function viewDetails(id) {
-  localStorage.setItem("personId", id);
-  window.location.href = "details.html";
-}
-
-async function loadDetails() {
-  const id = localStorage.getItem("personId");
-
-  const { data } = await supabase
-    .from("persons")
-    .select("*")
-    .eq("id", id)
-    .single();
-
-  document.getElementById("details").innerHTML = `
-    <h2>${data.name}</h2>
-    <img src="${data.image}" width="200">
-    <p>${data.description}</p>
-    <p>Status: ${data.status}</p>
-
-    <button onclick="markFound(${data.id})">Mark Found</button>
-    <button onclick="deletePerson(${data.id})">Delete</button>
-  `;
 }
 
  
