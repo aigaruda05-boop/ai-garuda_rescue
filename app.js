@@ -1,9 +1,12 @@
+console.log("App.js Loaded");
+
+// ===== SUPABASE SETUP =====
 const SUPABASE_URL = "https://zzhpdcrmxiqmughywqhg.supabase.co";
-const SUPABASE_KEY = "sb_publishable_d0BTr8vU0tNDpjNyJ1-SbQ_mcMOgJvK";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp6aHBkY3JteGlxbXVnaHl3cWhnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1ODQyMTQsImV4cCI6MjA5MDE2MDIxNH0.ANrTGX6cjssM8xlLe0APznv_b3X657S3pCahZCOY9ko";
 
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// ================= AUTH =================
+// ===== AUTH =====
 
 async function signup() {
   const email = document.getElementById("email").value;
@@ -14,7 +17,7 @@ async function signup() {
   if (error) {
     alert(error.message);
   } else {
-    alert("Account created! Now login.");
+    alert("Signup successful! Now login.");
   }
 }
 
@@ -36,7 +39,7 @@ async function logout() {
   window.location.href = "login.html";
 }
 
-// ================= LOAD =================
+// ===== LOAD DATA =====
 
 async function loadPersons() {
   const { data } = await supabase
@@ -61,7 +64,7 @@ async function loadPersons() {
   });
 }
 
-// ================= SEARCH =================
+// ===== SEARCH =====
 
 async function searchPersons() {
   const value = document.getElementById("search").value;
@@ -71,10 +74,6 @@ async function searchPersons() {
     .select("*")
     .or(`name.ilike.%${value}%,m_district.ilike.%${value}%`);
 
-  displayCustom(data);
-}
-
-function displayCustom(data) {
   const container = document.getElementById("list");
   container.innerHTML = "";
 
@@ -89,7 +88,7 @@ function displayCustom(data) {
   });
 }
 
-// ================= REPORT =================
+// ===== REPORT =====
 
 async function submitForm(e) {
   e.preventDefault();
@@ -144,63 +143,6 @@ async function submitForm(e) {
     alert("Reported Successfully!");
     window.location.href = "index.html";
   }
-}
-
-// ================= MY REPORTS =================
-
-async function loadMyReports() {
-  const { data: userData } = await supabase.auth.getUser();
-
-  if (!userData.user) {
-    window.location.href = "login.html";
-    return;
-  }
-
-  const { data } = await supabase
-    .from("persons")
-    .select("*")
-    .eq("user_id", userData.user.id)
-    .order("id", { ascending: false });
-
-  const container = document.getElementById("list");
-  container.innerHTML = "";
-
-  if (!data || data.length === 0) {
-    container.innerHTML = "<h3>No reports yet</h3>";
-    return;
-  }
-
-  data.forEach(p => {
-    container.innerHTML += `
-      <div class="card">
-        <img src="${p.image || 'https://via.placeholder.com/200'}">
-        <h3>${p.name}</h3>
-        <p>Status: ${p.status}</p>
-
-        <button onclick="markFound(${p.id})">Mark Found</button>
-        <button onclick="deletePerson(${p.id})">Delete</button>
-      </div>
-    `;
-  });
-}
-
-// ================= DELETE =================
-
-async function deletePerson(id) {
-  await supabase.from("persons").delete().eq("id", id);
-  alert("Deleted");
-  location.reload();
-}
-
-// ================= MARK FOUND =================
-
-async function markFound(id) {
-  await supabase.from("persons")
-    .update({ status: "found" })
-    .eq("id", id);
-
-  alert("Marked as found");
-  location.reload();
 }
 
  
