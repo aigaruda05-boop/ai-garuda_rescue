@@ -1,42 +1,16 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>AI GARUDA</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-</head>
-
 <body onload="loadPersons()">
 
-<!-- NAVBAR -->
 <div class="navbar">
-
-  <div class="logo-box">
-    <img src="images/logo.png" class="logo">
-    <h2>AI GARUDA</h2>
-  </div>
-
-  <input type="text" id="search" placeholder="Search by name">
-
-  <button onclick="searchPersons()">Search</button>
-
-  <a href="login.html"
-  class="login-btn">login</a>
-
-  <a href="report.html" class="report-btn">Report Missing</a>
-
+  <h2>AI GARUDA</h2>
+  <a href="report.html">Report Missing</a>
 </div>
 
-<!-- TITLE -->
-<h1>Find Missing People Faster</h1>
-<p style="text-align:center;">Powered by AI GARUDA</p>
+<input id="search" placeholder="Search">
+<button onclick="searchPersons()">Search</button>
 
-<!-- DATA -->
-<div id="list" class="container"></div>
+<!-- IMPORTANT -->
+<div id="list"></div>
 
 <script src="app.js"></script>
 
 </body>
-</html>
-
- 
