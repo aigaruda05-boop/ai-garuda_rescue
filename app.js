@@ -16,7 +16,7 @@ async function login() {
   if (error) {
     alert(error.message);
   } else {
-    alert("Login success");
+    alert("Login successful");
     window.location.href = "index.html";
   }
 }
@@ -31,7 +31,7 @@ async function signup() {
   if (error) {
     alert(error.message);
   } else {
-    alert("Signup success");
+    alert("Signup successful");
   }
 }
 
@@ -39,15 +39,20 @@ async function signup() {
 async function loadPersons() {
   const { data, error } = await client
     .from("persons")
-    .select("*")
-    .order("id", { ascending: false });
+    .select("*");
 
   console.log("DATA:", data);
+  console.log("ERROR:", error);
 
   const container = document.getElementById("list");
   if (!container) return;
 
   container.innerHTML = "";
+
+  if (error) {
+    container.innerHTML = "<h3>Error loading data</h3>";
+    return;
+  }
 
   if (!data || data.length === 0) {
     container.innerHTML = "<h3>No data found</h3>";
@@ -71,7 +76,7 @@ async function submitForm(e) {
   const { data: userData } = await client.auth.getUser();
 
   if (!userData.user) {
-    alert("Login first");
+    alert("Please login first");
     window.location.href = "login.html";
     return;
   }
@@ -85,7 +90,7 @@ async function submitForm(e) {
   if (error) {
     alert(error.message);
   } else {
-    alert("Report added");
+    alert("Report submitted");
     window.location.href = "index.html";
   }
 }
@@ -102,6 +107,11 @@ async function searchPersons() {
   const container = document.getElementById("list");
   container.innerHTML = "";
 
+  if (!data || data.length === 0) {
+    container.innerHTML = "<h3>No results</h3>";
+    return;
+  }
+
   data.forEach(p => {
     container.innerHTML += `
       <div style="border:1px solid #ccc; padding:10px; margin:10px;">
@@ -111,3 +121,5 @@ async function searchPersons() {
     `;
   });
 }
+
+ 
