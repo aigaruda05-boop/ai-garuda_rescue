@@ -2,17 +2,44 @@
 <html>
 <head>
   <title>Report Missing</title>
+  <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 </head>
 
 <body>
 
-<h2>Report Missing Person</h2>
+<div class="navbar">
+  <h2>AI GARUDA</h2>
+  <a href="index.html">Home</a>
+</div>
 
-<form onsubmit="submitForm(event)">
-  <input id="name" placeholder="Name" required>
-  <br><br>
-  <button type="submit">Submit</button>
+<h2 style="text-align:center;">Report Missing Person</h2>
+
+<form onsubmit="submitForm(event)" class="form-box">
+
+<input id="name" placeholder="Name" required>
+<input id="age" placeholder="Age">
+
+<input id="mobile1" placeholder="Family Mobile 1">
+<input id="mobile2" placeholder="Family Mobile 2">
+
+<input id="m_state" placeholder="Missing State">
+<input id="m_district" placeholder="Missing District">
+<input id="m_village" placeholder="Missing Village">
+
+<input id="a_state" placeholder="Address State">
+<input id="a_district" placeholder="Address District">
+<input id="a_village" placeholder="Address Village">
+<input id="colony" placeholder="Colony">
+
+<input id="date" type="date">
+
+<textarea id="description" placeholder="Description"></textarea>
+
+<input id="image" type="file">
+
+<button type="submit">Submit</button>
+
 </form>
 
 <script src="app.js"></script>
