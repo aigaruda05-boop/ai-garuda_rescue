@@ -1,16 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AI Garuda</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+</head>
+
 <body onload="loadPersons()">
 
-<div class="navbar">
-  <h2>AI GARUDA</h2>
-  <a href="report.html">Report Missing</a>
-</div>
+<h1>AI GARUDA</h1>
 
-<input id="search" placeholder="Search">
+<a href="login.html">Login</a>
+<a href="report.html">Report Missing</a>
+
+<br><br>
+
+<input id="search" placeholder="Search by name">
 <button onclick="searchPersons()">Search</button>
 
-<!-- IMPORTANT -->
+<hr>
+
 <div id="list"></div>
 
 <script src="app.js"></script>
 
 </body>
+</html>
