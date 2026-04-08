@@ -4,19 +4,23 @@ console.log("App.js Loaded");
 const SUPABASE_URL = "https://zzhpdcrmxiqmughywqhg.supabase.co";
 const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp6aHBkY3JteGlxbXVnaHl3cWhnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1ODQyMTQsImV4cCI6MjA5MDE2MDIxNH0.ANrTGX6cjssM8xlLe0APznv_b3X657S3pCahZCOY9ko";
 
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+// ✅ ONLY ONE CLIENT
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // ===== LOAD PERSONS =====
 async function loadPersons() {
-  const { data, error } = await supabase
+  const { data, error } = await supabaseClient
     .from("persons")
     .select("*")
     .order("id", { ascending: false });
 
   const container = document.getElementById("list");
+  if (!container) return;
+
   container.innerHTML = "";
 
   if (error) {
+    console.log(error);
     container.innerHTML = "<h3>Error loading data</h3>";
     return;
   }
@@ -48,7 +52,7 @@ async function submitForm(e) {
   const file = document.getElementById("image").files[0];
 
   if (file) {
-    const { data, error } = await supabase.storage
+    const { data, error } = await supabaseClient.storage
       .from("images")
       .upload(Date.now() + file.name, file);
 
@@ -57,7 +61,7 @@ async function submitForm(e) {
     }
   }
 
-  const { error } = await supabase.from("persons").insert([{
+  const { error } = await supabaseClient.from("persons").insert([{
     name: document.getElementById("name").value,
     age: document.getElementById("age").value,
     mobile1: document.getElementById("mobile1").value,
@@ -87,7 +91,7 @@ async function submitForm(e) {
 async function searchPersons() {
   const value = document.getElementById("search").value;
 
-  const { data } = await supabase
+  const { data } = await supabaseClient
     .from("persons")
     .select("*")
     .ilike("name", `%${value}%`);
