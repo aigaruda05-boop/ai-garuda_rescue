@@ -1,26 +1,54 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>AI Garuda</title>
+  <!-- ✅ TITLE -->
+  <title>AI Garuda | Missing Person Rescue System</title>
+
+  <!-- ✅ SEO META -->
+  <meta name="description" content="AI Garuda helps find missing persons using technology and reporting system.">
+  <meta name="keywords" content="AI Garuda, missing persons, rescue system, India">
+  <meta name="author" content="Abhi - Founder AI Garuda">
+
+  <!-- ✅ FAVICON (LOGO) -->
+  <link rel="icon" href="favicon.png" type="image/png">
+
+  <!-- ✅ SOCIAL PREVIEW -->
+  <meta property="og:title" content="AI Garuda">
+  <meta property="og:description" content="Helping find missing persons using AI technology">
+  <meta property="og:image" content="https://aigarudarescue.in/favicon.png">
+  <meta property="og:url" content="https://aigarudarescue.in">
+
+  <!-- CSS -->
   <link rel="stylesheet" href="style.css">
+
+  <!-- SUPABASE -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 </head>
 
 <body onload="loadPersons()">
 
+<!-- NAVBAR -->
 <div class="navbar">
   <h2>AI GARUDA</h2>
 
   <input id="search" placeholder="Search..." onkeyup="searchPersons()">
 
-  <a href="report.html">Report Missing</a>
+  <a href="report.html" class="report-btn">Report Missing</a>
 </div>
 
+<!-- ABOUT SECTION (IMPORTANT FOR GOOGLE) -->
+<div style="padding:20px; text-align:center;">
+  <p>
+    AI Garuda is an AI-powered platform designed to help find missing persons quickly and efficiently.
+    Users can report missing cases, search individuals, and support rescue efforts.
+  </p>
+</div>
+
+<!-- DATA DISPLAY -->
 <div id="list" class="container"></div>
 
+<!-- JS -->
 <script src="app.js"></script>
 
 </body>
 </html>
-
- 
