@@ -32,22 +32,23 @@ async function loadPersons() {
   data.forEach(p => {
     container.innerHTML += `
       <div class="card">
-        <img
-          src="${p.image || 'https://via.placeholder.com/200'}"
-          style="cursor:pointer;"
-          onclick='viewDetails(${JSON.stringify(p)})'
-        >
+        <img src="${p.image || 'https://via.placeholder.com/200'}">
 
         <h3>${p.name}</h3>
         <p>Age: ${p.age || ""}</p>
         <p>Missing: ${p.m_district || ""}</p>
         <p>Status: ${p.status}</p>
+
+        <!-- ✅ MORE DETAILS BUTTON -->
+        <button onclick='viewDetails(${JSON.stringify(p)})' class="details-btn">
+          More Details
+        </button>
       </div>
     `;
   });
 }
 
-// ===== VIEW DETAILS (CLICK IMAGE) =====
+// ===== VIEW DETAILS =====
 function viewDetails(p) {
   alert(
     "Name: " + (p.name || "") +
@@ -70,7 +71,6 @@ async function submitForm(e) {
 
   const file = document.getElementById("image").files[0];
 
-  // Upload image
   if (file) {
     const fileName = Date.now() + "-" + file.name;
 
@@ -91,7 +91,6 @@ async function submitForm(e) {
     imageUrl = data.publicUrl;
   }
 
-  // Insert data
   const { error } = await supabaseClient.from("persons").insert([
     {
       name: document.getElementById("name").value || "",
@@ -141,14 +140,14 @@ async function searchPersons() {
   data.forEach(p => {
     container.innerHTML += `
       <div class="card">
-        <img
-          src="${p.image || 'https://via.placeholder.com/200'}"
-          style="cursor:pointer;"
-          onclick='viewDetails(${JSON.stringify(p)})'
-        >
+        <img src="${p.image || 'https://via.placeholder.com/200'}">
 
         <h3>${p.name}</h3>
         <p>Status: ${p.status}</p>
+
+        <button onclick='viewDetails(${JSON.stringify(p)})' class="details-btn">
+          More Details
+        </button>
       </div>
     `;
   });
