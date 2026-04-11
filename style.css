@@ -9,7 +9,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #000;
+  background: #007bff; /* BLUE */
   color: white;
   padding: 10px;
 }
@@ -24,9 +24,9 @@ body {
 
 /* ===== BUTTONS ===== */
 
-/* Report button (red) */
+/* Report button */
 .report-btn {
-  background: red;
+  background: #0056b3;
   color: white;
   padding: 8px 12px;
   text-decoration: none;
@@ -34,12 +34,12 @@ body {
 }
 
 .report-btn:hover {
-  background: darkred;
+  background: #003d80;
 }
 
-/* Home button (red) */
+/* Home button */
 .home-btn {
-  background: red;
+  background: #0056b3;
   color: white;
   padding: 8px 12px;
   text-decoration: none;
@@ -47,12 +47,12 @@ body {
 }
 
 .home-btn:hover {
-  background: darkred;
+  background: #003d80;
 }
 
 /* More details button */
 .details-btn {
-  background: blue;
+  background: #007bff;
   color: white;
   padding: 6px;
   border: none;
@@ -61,13 +61,20 @@ body {
 }
 
 .details-btn:hover {
-  background: darkblue;
+  background: #0056b3;
 }
 
 /* Submit button */
 button {
   padding: 8px 10px;
   margin-top: 10px;
+  background: #007bff;
+  color: white;
+  border: none;
+}
+
+button:hover {
+  background: #0056b3;
 }
 
 /* ===== CONTAINER ===== */
@@ -79,7 +86,7 @@ button {
 
 /* ===== CARD ===== */
 .card {
-  border: 1px solid black;
+  border: 1px solid #007bff;
   padding: 10px;
   margin: 10px;
   width: 200px;
