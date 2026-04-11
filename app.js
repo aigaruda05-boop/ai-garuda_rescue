@@ -39,8 +39,7 @@ async function loadPersons() {
         <p>Missing: ${p.m_district || ""}</p>
         <p>Status: ${p.status}</p>
 
-        <!-- ✅ MORE DETAILS BUTTON -->
-        <button onclick='viewDetails(${JSON.stringify(p)})' class="details-btn">
+        <button onclick="goDetails(${p.id})" class="details-btn">
           More Details
         </button>
       </div>
@@ -48,22 +47,54 @@ async function loadPersons() {
   });
 }
 
-// ===== VIEW DETAILS =====
-function viewDetails(p) {
-  alert(
-    "Name: " + (p.name || "") +
-    "\nAge: " + (p.age || "") +
-    "\nMobile1: " + (p.mobile1 || "") +
-    "\nMobile2: " + (p.mobile2 || "") +
-    "\nMissing: " + (p.m_state || "") + ", " + (p.m_district || "") +
-    "\nAddress: " + (p.a_state || "") + ", " + (p.a_district || "") +
-    "\nColony: " + (p.colony || "") +
-    "\nDate: " + (p.date || "") +
-    "\nDescription: " + (p.description || "")
-  );
+// ===== REDIRECT TO DETAILS PAGE =====
+function goDetails(id) {
+  window.location.href = "details.html?id=" + id;
 }
 
-// ===== REPORT =====
+// ===== LOAD DETAILS PAGE =====
+async function loadDetails() {
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("id");
+
+  if (!id) return;
+
+  const { data, error } = await supabaseClient
+    .from("persons")
+    .select("*")
+    .eq("id", id)
+    .single();
+
+  const container = document.getElementById("details");
+
+  if (!container) return;
+
+  if (error) {
+    console.log(error);
+    container.innerHTML = "<h3>Error loading details</h3>";
+    return;
+  }
+
+  container.innerHTML = `
+    <div style="max-width:500px;margin:auto;text-align:center;">
+      <img src="${data.image || ''}" style="width:100%;border-radius:10px;">
+
+      <h2>${data.name}</h2>
+      <p>Age: ${data.age || ""}</p>
+
+      <p><b>Missing Location:</b> ${data.m_state || ""}, ${data.m_district || ""}</p>
+      <p><b>Address:</b> ${data.a_state || ""}, ${data.a_district || ""}</p>
+
+      <p><b>Mobile 1:</b> ${data.mobile1 || ""}</p>
+      <p><b>Mobile 2:</b> ${data.mobile2 || ""}</p>
+
+      <p><b>Date:</b> ${data.date || ""}</p>
+      <p>${data.description || ""}</p>
+    </div>
+  `;
+}
+
+// ===== REPORT FORM =====
 async function submitForm(e) {
   e.preventDefault();
 
@@ -71,6 +102,7 @@ async function submitForm(e) {
 
   const file = document.getElementById("image").files[0];
 
+  // Upload image
   if (file) {
     const fileName = Date.now() + "-" + file.name;
 
@@ -91,6 +123,7 @@ async function submitForm(e) {
     imageUrl = data.publicUrl;
   }
 
+  // Insert into DB
   const { error } = await supabaseClient.from("persons").insert([
     {
       name: document.getElementById("name").value || "",
@@ -130,6 +163,9 @@ async function searchPersons() {
     .ilike("name", `%${value}%`);
 
   const container = document.getElementById("list");
+
+  if (!container) return;
+
   container.innerHTML = "";
 
   if (!data || data.length === 0) {
@@ -145,10 +181,21 @@ async function searchPersons() {
         <h3>${p.name}</h3>
         <p>Status: ${p.status}</p>
 
-        <button onclick='viewDetails(${JSON.stringify(p)})' class="details-btn">
+        <button onclick="goDetails(${p.id})" class="details-btn">
           More Details
         </button>
       </div>
     `;
   });
 }
+
+// ===== AUTO LOAD =====
+window.onload = function () {
+  if (document.getElementById("list")) {
+    loadPersons();
+  }
+
+  if (document.getElementById("details")) {
+    loadDetails();
+  }
+};
