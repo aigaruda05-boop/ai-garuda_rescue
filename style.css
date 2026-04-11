@@ -1,149 +1,107 @@
-/* BODY */
+/* ===== BODY ===== */
 body {
+  font-family: Arial;
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #0b1f5b, #1e3a8a, #2563eb);
-  color: white;
 }
 
-/* NAVBAR */
+/* ===== NAVBAR ===== */
 .navbar {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 15px 30px;
-  background: rgba(0,0,0,0.4);
-}
-
-/* LOGO */
-.logo-box {
-  display: flex;
   align-items: center;
+  background: #000;
+  color: white;
+  padding: 10px;
 }
 
-.logo {
-  width: 40px;
-  margin-right: 10px;
+.navbar h2 {
+  margin: 0;
 }
 
-/* SEARCH */
-input[type="text"] {
-  padding: 8px;
-  border-radius: 6px;
+.navbar input {
+  padding: 5px;
+}
+
+/* ===== BUTTONS ===== */
+
+/* Report button (red) */
+.report-btn {
+  background: red;
+  color: white;
+  padding: 8px 12px;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.report-btn:hover {
+  background: darkred;
+}
+
+/* Home button (red) */
+.home-btn {
+  background: red;
+  color: white;
+  padding: 8px 12px;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.home-btn:hover {
+  background: darkred;
+}
+
+/* More details button */
+.details-btn {
+  background: blue;
+  color: white;
+  padding: 6px;
   border: none;
-}
-
-/* BUTTONS */
-button {
-  padding: 8px 15px;
-  border: none;
-  border-radius: 6px;
+  margin-top: 5px;
   cursor: pointer;
 }
 
-/* LOGIN BUTTON */
-.login-btn {
-  background: green;
-  padding: 10px 15px;
-  color: white;
-  text-decoration: none;
-  border-radius: 6px;
+.details-btn:hover {
+  background: darkblue;
 }
 
-/* REPORT BUTTON */
-.report-btn {
-  background: red;
-  padding: 10px 15px;
-  color: white;
-  text-decoration: none;
-  border-radius: 6px;
+/* Submit button */
+button {
+  padding: 8px 10px;
+  margin-top: 10px;
 }
 
-/* TITLE */
-h1 {
-  text-align: center;
-  margin-top: 20px;
-}
-
-/* SUBTITLE */
-p {
-  text-align: center;
-}
-
-/* CONTAINER */
+/* ===== CONTAINER ===== */
 .container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  padding: 20px;
 }
 
-/* CARD */
+/* ===== CARD ===== */
 .card {
-  background: white;
-  color: black;
-  margin: 15px;
+  border: 1px solid black;
   padding: 10px;
-  width: 220px;
-  border-radius: 12px;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-  transition: 0.3s;
+  margin: 10px;
+  width: 200px;
+  text-align: center;
 }
 
-.card:hover {
-  transform: scale(1.05);
-}
-
+/* Image */
 .card img {
   width: 100%;
-  border-radius: 10px;
+  height: 180px;
+  object-fit: cover;
 }
 
-/* FORM */
-form {
-  text-align: center;
+/* ===== FORM ===== */
+.form-box {
+  width: 300px;
+  margin: auto;
 }
 
-form input,
-form textarea {
-  width: 250px;
-  padding: 10px;
-  margin: 8px;
-  border-radius: 6px;
-  border: none;
+.form-box input,
+.form-box textarea {
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0;
 }
-
-/* FILE INPUT */
-input[type="file"] {
-  color: white;
-}
-
-/* SUBMIT BUTTON */
-form button {
-  background: #2563eb;
-  color: white;
-}
-
-/* DETAILS PAGE */
-#details {
-  text-align: center;
-  padding: 20px;
-}
-
-#details img {
-  border-radius: 10px;
-  margin: 10px;
-}
-
-/* STATUS COLORS */
-.status-missing {
-  color: red;
-  font-weight: bold;
-}
-
-.status-found {
-  color: green;
-  font-weight: bold;
-}
-
- 
