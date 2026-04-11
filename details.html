@@ -1,15 +1,56 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Details</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <title>Details</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 </head>
 
-<body onload="loadDetails()">
+<body>
 
-<div id="details"></div>
+<div class="navbar">
+  <h2>AI GARUDA</h2>
+  <a href="index.html" class="details-btn">Home</a>
+</div>
+
+<div id="details" style="padding:20px;"></div>
 
 <script src="app.js"></script>
+
+<script>
+async function loadDetails() {
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("id");
+
+  const { data } = await supabaseClient
+    .from("persons")
+    .select("*")
+    .eq("id", id)
+    .single();
+
+  const d = document.getElementById("details");
+
+  d.innerHTML = `
+    <div style="max-width:500px;margin:auto;text-align:center;">
+      <img src="${data.image}" style="width:100%;border-radius:10px;">
+
+      <h2>${data.name}</h2>
+      <p>Age: ${data.age}</p>
+
+      <p><b>Missing Location:</b> ${data.m_state}, ${data.m_district}</p>
+      <p><b>Address:</b> ${data.a_state}, ${data.a_district}</p>
+
+      <p><b>Mobile 1:</b> ${data.mobile1}</p>
+      <p><b>Mobile 2:</b> ${data.mobile2}</p>
+
+      <p><b>Date:</b> ${data.date}</p>
+      <p>${data.description}</p>
+    </div>
+  `;
+}
+
+loadDetails();
+</script>
 
 </body>
 </html>
