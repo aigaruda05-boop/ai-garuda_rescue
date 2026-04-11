@@ -11,35 +11,18 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 20px;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(10px);
+  padding: 15px;
+  background: rgba(0,0,0,0.6);
 }
 
 .navbar h2 {
-  margin: 0;
   color: #00c3ff;
 }
 
 .navbar input {
   padding: 8px;
-  border-radius: 6px;
+  border-radius: 5px;
   border: none;
-  outline: none;
-}
-
-/* ===== BUTTONS ===== */
-.report-btn,
-.home-btn,
-.details-btn,
-button {
-  background: linear-gradient(45deg, #00c3ff, #6a5acd);
-  color: white;
-  padding: 8px 12px;
-  border-radius: 8px;
-  border: none;
-  text-decoration: none;
-  cursor: pointer;
 }
 
 /* ===== CONTAINER ===== */
@@ -47,59 +30,46 @@ button {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  padding: 20px;
 }
 
 /* ===== CARD ===== */
 .card {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 15px;
-  margin: 15px;
   width: 220px;
+  margin: 15px;
+  border-radius: 10px;
+  overflow: hidden; /* IMPORTANT */
+  background: rgba(255,255,255,0.05);
   text-align: center;
-  overflow: hidden; /* ✅ IMPORTANT FIX */
-  backdrop-filter: blur(10px);
-  box-shadow: 0 0 15px rgba(0, 195, 255, 0.2);
-  transition: 0.3s;
-}
-
-.card:hover {
-  transform: scale(1.05);
+  padding-bottom: 10px;
 }
 
 /* ===== IMAGE FIX ===== */
 .card img {
   width: 100%;
-  height: 180px; /* fixed height */
-  object-fit: cover; /* crop properly */
-  display: block;
+  height: 180px;
+  object-fit: cover; /* FIX */
 }
 
-/* ===== CARD TEXT ===== */
-.card h3 {
-  margin: 10px 0 5px;
-  color: #00c3ff;
-}
-
-.card p {
-  margin: 5px 0;
+/* ===== BUTTON ===== */
+.details-btn {
+  background: linear-gradient(45deg, #00c3ff, #6a5acd);
+  color: white;
+  border: none;
+  padding: 8px;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 /* ===== FORM ===== */
 .form-box {
-  width: 320px;
-  margin: 30px auto;
-  background: rgba(255, 255, 255, 0.05);
+  width: 300px;
+  margin: auto;
   padding: 20px;
-  border-radius: 15px;
 }
 
 .form-box input,
 .form-box textarea {
   width: 100%;
-  padding: 10px;
-  margin: 8px 0;
-  border-radius: 6px;
-  border: none;
-  outline: none;
+  margin: 5px 0;
+  padding: 8px;
 }
