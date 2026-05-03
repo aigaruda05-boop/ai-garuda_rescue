@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI GARUDA - Live Scanner</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+</head>
+<body>
+
+<div class="navbar">
+    <h2>AI GARUDA SCANNER</h2>
+    <a href="index.html" class="details-btn">Home</a>
+</div>
+
+<div style="text-align:center; padding:20px;">
+    <div style="position:relative; display:inline-block;">
+        <video id="video" width="100%" style="max-width:500px; border-radius:15px; border:3px solid #00c3ff;" autoplay></video>
+        <canvas id="canvas" width="400" height="300" style="display:none;"></canvas>
+        <div id="scan-line" style="position:absolute; top:0; left:0; width:100%; height:2px; background:red; box-shadow:0 0 10px red; animation: moveScan 2s linear infinite;"></div>
+    </div>
+
+    <div id="scan-result" style="margin-top:20px; font-size:1.2rem;">
+        Ready to scan...
+    </div>
+
+    <button id="scan-btn" class="details-btn" style="padding:15px 30px; margin-top:20px; font-weight:bold;">
+        CAPTURE & IDENTIFY
+    </button>
+</div>
+
+<style>
+@keyframes moveScan {
+    0% { top: 0; }
+    100% { top: 100%; }
+}
+</style>
+
+<script src="app.js"></script>
+<script>
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const resultDiv = document.getElementById('scan-result');
+    const scanBtn = document.getElementById('scan-btn');
+
+    // Access the camera (Back camera if mobile)
+    navigator.mediaDevices.getUserMedia({ 
+        video: { facingMode: "environment" } 
+    })
+    .then(stream => {
+        video.srcObject = stream;
+    })
+    .catch(err => {
+        console.error("Camera error:", err);
+        resultDiv.innerHTML = "❌ Camera access denied.";
+    });
+
+    scanBtn.addEventListener('click', async () => {
+        resultDiv.innerHTML = "🌀 Processing face... Please wait.";
+        resultDiv.style.color = "#00c3ff";
+
+        const context = canvas.getContext('2d');
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        
+        // Convert canvas image to a File object
+        canvas.toBlob(async (blob) => {
+            const file = new File([blob], "scan.jpg", { type: "image/jpeg" });
+            
+            // Re-using your existing checkFaceAI function from app.js
+            try {
+                await checkFaceAI(file); 
+                // Note: checkFaceAI in app.js already handles alerts and UI updates
+                resultDiv.innerHTML = "Scan Complete. Check results above.";
+            } catch (err) {
+                resultDiv.innerHTML = "❌ Connection to AI Backend failed.";
+            }
+        }, 'image/jpeg');
+    });
+</script>
+</body>
+</html>
