@@ -7,98 +7,86 @@
 <style>
 body {
     font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #000000, #001f3f, #003366);
+    background: #f4f4f4;
     text-align: center;
-    color: white;
 }
 
 h1 {
-    background: rgba(0, 123, 255, 0.8);
+    background: #007bff;
     color: white;
     padding: 15px;
-    margin-top: 0;
 }
 
 .container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    padding: 20px;
 }
 
 .card {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 15px;
+    background: white;
+    padding: 10px;
     margin: 10px;
     border-radius: 10px;
-    width: 220px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    border: 1px solid rgba(255,255,255,0.1);
+    width: 200px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
 img {
     width: 100%;
-    height: 180px;
     border-radius: 10px;
-    object-fit: cover;
-}
-
-.details-btn {
-    background: linear-gradient(45deg, #00c3ff, #6a5acd);
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    text-decoration: none;
-    display: inline-block;
-    margin-top: 10px;
 }
 </style>
 </head>
 
 <body onload="loadPersons()">
 
-<h1>AI Garuda - Intelligent Rescue Network</h1>
+<h1>AI Garuda - Missing Persons</h1>
 
+<!-- 🔥 NEW: EMAIL INPUT (ADDED, NOT REMOVED ANYTHING) -->
 <div style="margin:20px;">
-    <input type="email" id="email" placeholder="Enter your email for alerts" 
-    style="padding:10px; width:280px; border-radius:8px; border:none;">
+    <input type="email" id="email" placeholder="Enter your email" style="padding:10px; width:250px;">
 </div>
 
+<!-- DATA DISPLAY -->
 <div id="list" class="container"></div>
 
-<a href="scanner.html" style="
+<!-- OPTIONAL BUTTON -->
+<button onclick="startScan()" style="
 position:fixed;
 bottom:20px;
 right:20px;
-padding:15px 25px;
-background:#00c3ff;
+padding:12px 20px;
+background:#007bff;
 color:white;
-text-decoration:none;
-font-weight:bold;
-border-radius:50px;
-box-shadow: 0 5px 15px rgba(0,195,255,0.4);
-z-index: 1000;">
-📸 Open Live Scanner
-</a>
+border:none;
+border-radius:10px;
+cursor:pointer;">
+Scan Face
+</button>
 
+<!-- 🔥 NEW: LIVE ALERT PANEL -->
 <h2>🚨 Live Detection Alerts</h2>
 
 <div id="alerts" style="
 max-width:600px;
 margin:20px auto;
-background:rgba(255,255,255,0.1);
-padding:20px;
-border-radius:15px;
+background:white;
+padding:15px;
+border-radius:10px;
+box-shadow:0 2px 5px rgba(0,0,0,0.2);
 text-align:left;
-border: 1px solid #00c3ff;
 ">
-<p>Monitoring for matches...</p>
+<p>No alerts yet...</p>
 </div>
 
+<!-- SUPABASE -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+<!-- YOUR MAIN JS -->
 <script src="app.js"></script>
+
+<!-- AI ALERT SYSTEM -->
 <script src="ai.js"></script>
 
 </body>
