@@ -1,9 +1,8 @@
 console.log("App.js Loaded");
 
 // ===== SUPABASE SETUP =====
-const SUPABASE_URL = "https://zzhpdcrmxiqmughywqhg.supabase.co";
+const SUPABASE_URL = "https://zzhpdcxmigumghywqghg.supabase.co";
 const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp6aHBkY3JteGlxbXVnaHl3cWhnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1ODQyMTQsImV4cCI6MjA5MDE2MDIxNH0.ANrTGX6cjssM8xlLe0APznv_b3X657S3pCahZCOY9ko";
-
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // ===== AI BACKEND URL =====
@@ -309,9 +308,13 @@ function addAlert(person, file) {
     };
 
     reader.readAsDataURL(file);
-  }
+}
 
-  //EMAIL ALERT (SIMULATION)
-  function sendEmailAlert(person,file) {
-    console.log("sending alert to.", person.email || currentUserEmail);
-  }
+    //EMAIL ALERT (SIMULATION)
+    function sendEmailAlert(person, file) {
+
+        console.log("Sending alert to.", person.email ||
+    currentUserEmail);
+
+    // Here later we connect real email API
+}
