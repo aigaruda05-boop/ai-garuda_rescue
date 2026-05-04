@@ -1,53 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Report Missing</title>
+  <title>Report Missing Person</title>
   <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 </head>
-
 <body>
 
-<div class="navbar">
-  <h2>AI GARUDA</h2>
+<header>
+  <h1 class="title">AI GARUDA</h1>
+</header>
 
-  <!-- ✅ RED HOME BUTTON -->
-  <a href="index.html" class="home-btn">Home</a>
+<div class="form-container">
+  <h2>Report Missing Person</h2>
+
+  <form id="reportForm">
+    <input type="text" id="name" placeholder="Name" required>
+    <input type="number" id="age" placeholder="Age" required>
+    <input type="text" id="phone" placeholder="Family Mobile Number" required>
+    <input type="text" id="last_seen" placeholder="Last Seen Location" required>
+    <input type="text" id="address" placeholder="Home Address" required>
+    
+    <textarea id="description" placeholder="Description"></textarea>
+    
+    <input type="file" id="photo" required>
+
+    <button type="submit">Submit</button>
+  </form>
 </div>
 
-<h2 style="text-align:center;">Report Missing Person</h2>
-
-<form onsubmit="submitForm(event)" class="form-box">
-
-<input id="name" placeholder="Name" required>
-<input id="age" placeholder="Age">
-
-<input id="mobile1" placeholder="Family Mobile 1">
-<input id="mobile2" placeholder="Family Mobile 2">
-
-<input type="email" id="email" placeholder="Enter your Email ID"
-style="width:90%; padding:10px; margin:10px; border-radius:8px; border:1px solid #ccc;">
-<input id="m_state" placeholder="Missing State">
-<input id="m_district" placeholder="Missing District">
-<input id="m_village" placeholder="Missing Village">
-
-<input id="a_state" placeholder="Address State">
-<input id="a_district" placeholder="Address District">
-<input id="a_village" placeholder="Address Village">
-<input id="colony" placeholder="Colony">
-
-<input id="date" type="date">
-
-<textarea id="description" placeholder="Description"></textarea>
-
-<input id="image" type="file">
-
-<button type="submit">Submit</button>
-
-</form>
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 <script src="app.js"></script>
-<script src="ai.js"></script>
 
 </body>
 </html>
