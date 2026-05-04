@@ -1,93 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>AI Garuda</title>
-
-<style>
-body {
-    font-family: Arial, sans-serif;
-    background: #f4f4f4;
-    text-align: center;
-}
-
-h1 {
-    background: #007bff;
-    color: white;
-    padding: 15px;
-}
-
-.container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.card {
-    background: white;
-    padding: 10px;
-    margin: 10px;
-    border-radius: 10px;
-    width: 200px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
-
-img {
-    width: 100%;
-    border-radius: 10px;
-}
-</style>
+  <title>AI GARUDA</title>
+  <link rel="stylesheet" href="style.css">
 </head>
+<body>
 
-<body onload="loadPersons()">
+<header>
+  <h1 class="title">AI GARUDA</h1>
+  <a href="report.html" class="report-btn">REPORT</a>
+</header>
 
-<h1>AI Garuda - Missing Persons</h1>
+<section class="hero">
+  <h2>Missing Persons Network</h2>
+  <p>Helping society find missing people faster</p>
+</section>
 
-<!-- 🔥 NEW: EMAIL INPUT (ADDED, NOT REMOVED ANYTHING) -->
-<div style="margin:20px;">
-    <input type="email" id="email" placeholder="Enter your email" style="padding:10px; width:250px;">
-</div>
+<section id="persons-container" class="grid"></section>
 
-<!-- DATA DISPLAY -->
-<div id="list" class="container"></div>
-
-<!-- OPTIONAL BUTTON -->
-<button onclick="startScan()" style="
-position:fixed;
-bottom:20px;
-right:20px;
-padding:12px 20px;
-background:#007bff;
-color:white;
-border:none;
-border-radius:10px;
-cursor:pointer;">
-Scan Face
-</button>
-
-<!-- 🔥 NEW: LIVE ALERT PANEL -->
-<h2>🚨 Live Detection Alerts</h2>
-
-<div id="alerts" style="
-max-width:600px;
-margin:20px auto;
-background:white;
-padding:15px;
-border-radius:10px;
-box-shadow:0 2px 5px rgba(0,0,0,0.2);
-text-align:left;
-">
-<p>No alerts yet...</p>
-</div>
-
-<!-- SUPABASE -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-
-<!-- YOUR MAIN JS -->
 <script src="app.js"></script>
-
-<!-- AI ALERT SYSTEM -->
-<script src="ai.js"></script>
 
 </body>
 </html>
