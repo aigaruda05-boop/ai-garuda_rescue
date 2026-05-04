@@ -1,75 +1,123 @@
-/* ===== BODY ===== */
+/* ===== GLOBAL ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
 body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #000000, #001f3f, #003366);
-  color: white;
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    color: #fff;
+    min-height: 100vh;
 }
 
-/* ===== NAVBAR ===== */
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px;
-  background: rgba(0,0,0,0.6);
-}
-
-.navbar h2 {
-  color: #00c3ff;
-}
-
-.navbar input {
-  padding: 8px;
-  border-radius: 5px;
-  border: none;
+/* ===== HEADER ===== */
+header {
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    background: rgba(0, 0, 0, 0.4);
+    letter-spacing: 1px;
 }
 
 /* ===== CONTAINER ===== */
 .container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-/* ===== CARD ===== */
-.card {
-  width: 220px;
-  margin: 15px;
-  border-radius: 10px;
-  overflow: hidden; /* IMPORTANT */
-  background: rgba(255,255,255,0.05);
-  text-align: center;
-  padding-bottom: 10px;
-}
-
-/* ===== IMAGE FIX ===== */
-.card img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover; /* FIX */
-}
-
-/* ===== BUTTON ===== */
-.details-btn {
-  background: linear-gradient(45deg, #00c3ff, #6a5acd);
-  color: white;
-  border: none;
-  padding: 8px;
-  border-radius: 5px;
-  cursor: pointer;
+    max-width: 500px;
+    margin: 40px auto;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 30px;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
 }
 
 /* ===== FORM ===== */
-.form-box {
-  width: 300px;
-  margin: auto;
-  padding: 20px;
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
-.form-box input,
-.form-box textarea {
-  width: 100%;
-  margin: 5px 0;
-  padding: 8px;
+/* ===== INPUTS ===== */
+input, textarea {
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    font-size: 15px;
+    transition: 0.3s;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: #ccc;
+}
+
+input:focus,
+textarea:focus {
+    background: rgba(255,255,255,0.15);
+}
+
+/* ===== FILE INPUT ===== */
+input[type="file"] {
+    padding: 10px;
+    background: rgba(255,255,255,0.1);
+}
+
+/* ===== BUTTON ===== */
+button {
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: #3b82f6;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-weight: bold;
+}
+
+button:hover {
+    background: #2563eb;
+    transform: scale(1.02);
+}
+
+/* ===== ALERT PANEL ===== */
+.alert-panel {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 10px;
+    background: rgba(255, 0, 0, 0.2);
+    border: 1px solid rgba(255, 0, 0, 0.5);
+    display: none;
+}
+
+.alert-panel.active {
+    display: block;
+}
+
+/* ===== SUCCESS MESSAGE ===== */
+.success {
+    margin-top: 10px;
+    padding: 10px;
+    background: rgba(0, 255, 0, 0.2);
+    border-radius: 8px;
+    text-align: center;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 600px) {
+    .container {
+        margin: 20px;
+        padding: 20px;
+    }
+
+    header {
+        font-size: 22px;
+    }
 }
