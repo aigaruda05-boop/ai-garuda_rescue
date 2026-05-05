@@ -1,28 +1,44 @@
 const SUPABASE_URL = "https://zzhpdcrmxiqmughywqhg.supabase.co";
 const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp6aHBkY3JteGlxbXVnaHl3cWhnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1ODQyMTQsImV4cCI6MjA5MDE2MDIxNH0.ANrTGX6cjssM8xlLe0APznv_b3X657S3pCahZCOY9ko";
 
+
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// ===== LOAD HOME DATA =====
+// ===== LOAD DATA (HOME) =====
 async function loadData() {
-    const { data } = await supabase.from("persons").select("*");
+    try {
+        const { data, error } = await supabase
+            .from("persons")
+            .select("*")
+            .order("id", { ascending: false });
 
-    const container = document.getElementById("cards");
-    if (!container) return;
+        if (error) {
+            console.log("❌ Load error:", error);
+            return;
+        }
 
-    container.innerHTML = "";
+        const container = document.getElementById("cards");
+        if (!container) return;
 
-    data.forEach(p => {
-        container.innerHTML += `
-        <div class="card">
-            <img src="${p.image}">
-            <h3>${p.name}</h3>
-            <p>${p.date}</p>
-            <p>${p.colony}</p>
-            <button onclick="viewDetails(${p.id})">View Details</button>
-        </div>
-        `;
-    });
+        container.innerHTML = "";
+
+        data.forEach(p => {
+            container.innerHTML += `
+            <div class="card">
+                <img src="${p.image || 'https://via.placeholder.com/200'}">
+                <h3>${p.name}</h3>
+                <p>${p.date || ''}</p>
+                <p>${p.colony || ''}</p>
+                <button onclick="viewDetails(${p.id})">View Details</button>
+            </div>
+            `;
+        });
+
+        console.log("✅ Data loaded");
+
+    } catch (err) {
+        console.log("❌ Crash:", err);
+    }
 }
 
 loadData();
@@ -39,11 +55,16 @@ async function loadDetails() {
 
     if (!id) return;
 
-    const { data } = await supabase
+    const { data, error } = await supabase
         .from("persons")
         .select("*")
         .eq("id", id)
         .single();
+
+    if (error) {
+        console.log("❌ Details error:", error);
+        return;
+    }
 
     const d = document.getElementById("details");
     if (!d) return;
@@ -65,30 +86,69 @@ async function loadDetails() {
 
 loadDetails();
 
-// ===== SUBMIT FORM =====
+
+// ===== SUBMIT FORM (FIXED) =====
 async function submitForm() {
+    try {
+        const name = document.getElementById("name").value;
+        const age = document.getElementById("age").value;
+        const mobile1 = document.getElementById("mobile1").value;
+        const m_state = document.getElementById("m_state").value;
+        const m_district = document.getElementById("m_district").value;
+        const m_village = document.getElementById("m_village").value;
+        const colony = document.getElementById("colony").value;
+        const description = document.getElementById("description").value;
 
-    const file = document.getElementById("image").files[0];
-    const fileName = Date.now() + file.name;
+        const fileInput = document.getElementById("image");
+        const file = fileInput.files[0];
 
-    // upload image
-    await supabase.storage.from("images").upload(fileName, file);
+        let imageUrl = "";
 
-    const { data: imgData } = supabase.storage.from("images").getPublicUrl(fileName);
+        // 🔥 FIX: allow submit even without image
+        if (file) {
+            const fileName = Date.now() + "_" + file.name;
 
-    await supabase.from("persons").insert([{
-        name: document.getElementById("name").value,
-        age: document.getElementById("age").value,
-        mobile1: document.getElementById("mobile1").value,
-        m_state: document.getElementById("m_state").value,
-        m_district: document.getElementById("m_district").value,
-        m_village: document.getElementById("m_village").value,
-        colony: document.getElementById("colony").value,
-        description: document.getElementById("description").value,
-        image: imgData.publicUrl,
-        date: new Date().toISOString().split("T")[0]
-    }]);
+            const { error: uploadError } = await supabase.storage
+                .from("images")
+                .upload(fileName, file);
 
-    alert("Report submitted successfully");
-    window.location = "index.html";
-}
+            if (uploadError) {
+                console.log("❌ Upload error:", uploadError);
+                alert("Image upload failed");
+                return;
+            }
+
+            const { data } = supabase.storage
+                .from("images")
+                .getPublicUrl(fileName);
+
+            imageUrl = data.publicUrl;
+        }
+
+        // 🔥 INSERT DATA
+        const { error } = await supabase.from("persons").insert([{
+            name,
+            age,
+            mobile1,
+            m_state,
+            m_district,
+            m_village,
+            colony,
+            description,
+            image: imageUrl,
+            date: new Date().toISOString().split("T")[0]
+        }]);
+
+        if (error) {
+            console.log("❌ Insert error:", error);
+            alert("Insert failed");
+            return;
+        }
+
+        alert("✅ Submitted successfully!");
+        window.location.href = "index.html";
+
+    } catch (err) {
+       console.log("crash;",err);
+    }
+  }
