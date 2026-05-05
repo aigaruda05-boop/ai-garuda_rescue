@@ -1,31 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Report Missing Person</title>
-  <link rel="stylesheet" href="style.css">
+    <title>Report</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <header>
-  <h1 class="title">AI GARUDA</h1>
+    <h2 class="logo">AI GARUDA</h2>
 </header>
 
-<div class="form-container">
-  <h2>Report Missing Person</h2>
+<div class="form-box">
+    <h2>Report Missing Person</h2>
 
-  <form id="reportForm">
-    <input type="text" id="name" placeholder="Name" required>
-    <input type="number" id="age" placeholder="Age" required>
-    <input type="text" id="phone" placeholder="Family Mobile Number" required>
-    <input type="text" id="last_seen" placeholder="Last Seen Location" required>
-    <input type="text" id="address" placeholder="Home Address" required>
-    
+    <input id="name" placeholder="Name">
+    <input id="age" placeholder="Age">
+    <input id="mobile1" placeholder="Family Mobile">
+
+    <input id="m_state" placeholder="State">
+    <input id="m_district" placeholder="District">
+    <input id="m_village" placeholder="Village">
+    <input id="colony" placeholder="Colony / Address">
+
     <textarea id="description" placeholder="Description"></textarea>
-    
-    <input type="file" id="photo" required>
+    <input type="file" id="image">
 
-    <button type="submit">Submit</button>
-  </form>
+    <button onclick="submitForm()">Submit</button>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
